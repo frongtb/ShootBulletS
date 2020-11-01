@@ -11,7 +11,7 @@
 
 int main()
 {
-	Menu menu(Menu::window.getSize().x,Menu::window);
+	Menu menu(window.getSize().x,window.getSize().y);
 
 	menu.draw;
 
