@@ -90,6 +90,7 @@ public:
 	void updateEnemies();
 	void updateCombat();
 	void update();
+	void renderBGMenu();
 	void renderGUI();
 	void renderWorld();
 	void render();

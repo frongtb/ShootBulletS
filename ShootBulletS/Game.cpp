@@ -2,6 +2,9 @@
 
 
 //pri func
+
+
+
 void Game::initWindow()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(1080, 720), "ShootBulletS", sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close);
@@ -69,17 +72,7 @@ void Game::initSystems()
 	this->health = 10;
 }
 
-void Game::initBGmenu()
-{
-	if (!this->menuTexture.loadFromFile("Textures/background1"))
-	{
-		std::cout << "error menu bg" << "\n";
-	}
 
-	this->menuSprite.setSize(sf::Vector2f (static_cast<float>(this->window->getSize().x), static_cast<float>(this->window->getSize().y)
-		)
-	);
-}
 
 void Game::initPlayer()
 {
@@ -94,10 +87,23 @@ void Game::initEnemies()
 	this->spawnTimer = this->spawnTimerMax;
 }
 
+void Game::initBGmenu()
+{
+	if (!this->menuTexture.loadFromFile("Textures/background1.jpg"))
+	{
+		std::cout << "error menu bg" << "\n";
+	}
+
+	this->menuSprite.setSize(sf::Vector2f(static_cast<float>(this->window->getSize().x), static_cast<float>(this->window->getSize().y)
+	)
+	);
+}
 //con/des
 Game::Game()
 {
+	
 	this->initWindow();
+	this->initBGmenu();
 	this->intitTextures();
 	this->initGUI();
 	this->initWorld();
@@ -184,6 +190,7 @@ void Game::updatePollEvents()
 		if (e.Event::KeyPressed && e.Event::key.code == sf::Keyboard::T)
 		{
 			this->GameStart = false;
+			this->again();
 		}
 	}
 }
@@ -363,6 +370,11 @@ void Game::update()
 	this->updateWorld();
 }
 
+void Game::renderBGMenu()
+{
+	this->window->draw(this->menuSprite);
+}
+
 void Game::renderGUI()
 {
 	this->window->draw(this->pointText);
@@ -380,24 +392,30 @@ void Game::render()
 {
 	this->window->clear();
 
-	//Draw world
-	this->renderWorld();
-
-	//draw all stuff
-	this->player->render(*this->window);
-
-	for (auto& bullet : this->bullets)
+	if (!this->GameStart)
 	{
-		bullet->render(this->window);
+		this->renderBGMenu();
 	}
-
-	for (auto *enemy : this->enemies)
+	else
 	{
-		enemy->render(this->window);
+		//Draw world
+		this->renderWorld();
+		//draw all stuff
+		this->player->render(*this->window);
+
+		for (auto& bullet : this->bullets)
+		{
+			bullet->render(this->window);
+		}
+
+		for (auto* enemy : this->enemies)
+		{
+			enemy->render(this->window);
+		}
+
+
+		this->renderGUI();
 	}
-
-
-	this->renderGUI();
 
 	//Game Over screen
 	if (this->player->getHp() <= 0)
