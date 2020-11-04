@@ -1,17 +1,21 @@
 #include "Game.h"
 
+
 //pri func
 void Game::initWindow()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(1080, 720), "ShootBulletS", sf::Style::Titlebar | sf::Style::Resize | sf::Style::Close);
 	this->window->setFramerateLimit(60);
 	this->window->setVerticalSyncEnabled(false);
+	
+		
 }
 
 void Game::intitTextures()
 {
 	this->textures["BULLET"] = new sf::Texture();
 	this->textures["BULLET"]->loadFromFile("Textures/bullet.png");
+	
 }
 
 void Game::initGUI()
@@ -63,6 +67,18 @@ void Game::initSystems()
 {
 	this->points = 0;
 	this->health = 10;
+}
+
+void Game::initBGmenu()
+{
+	if (!this->menuTexture.loadFromFile("Textures/background1"))
+	{
+		std::cout << "error menu bg" << "\n";
+	}
+
+	this->menuSprite.setSize(sf::Vector2f (static_cast<float>(this->window->getSize().x), static_cast<float>(this->window->getSize().y)
+		)
+	);
 }
 
 void Game::initPlayer()
@@ -131,6 +147,23 @@ void Game::run()
 
 }
 
+void Game::again()
+{
+	for (auto& enemy : this->enemies)
+	{
+		delete enemy;
+	}
+	this->enemies.clear();
+
+	this->player->setHp(100);
+	this->points = 0;
+	for (auto& bullet : this->bullets)
+	{
+		delete bullet;
+	}
+	this->bullets.clear();
+}
+
 void Game::updatePollEvents()
 {
 	sf::Event e;
@@ -143,6 +176,14 @@ void Game::updatePollEvents()
 		if (e.Event::KeyPressed && e.Event::key.code == sf::Keyboard::Escape)
 		{
 			this->window->close();
+		}
+		if (e.Event::KeyPressed && e.Event::key.code == sf::Keyboard::R)
+		{
+			this->GameStart = true;
+		}
+		if (e.Event::KeyPressed && e.Event::key.code == sf::Keyboard::T)
+		{
+			this->GameStart = false;
 		}
 	}
 }
@@ -166,13 +207,14 @@ void Game::updateInput()
 	{
 		this->player->move(0.0f, 0.1f);
 	}
-
+	//std::cout << "Mouse position : " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << "\n";
 	if (::sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->player->canAtk())
 	{
 		this->bullets.push_back(new Bullet(this->textures["BULLET"], this->player->getPos().x +this->player->getBounds().width/2.f,
 			this->player->getPos().y,
 			0.f,-1.f ,5.f));
 	}
+
 }
 
 void Game::updateGUI()

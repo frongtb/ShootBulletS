@@ -4,7 +4,9 @@
 #include"Player.h"
 #include"Bullet.h"
 #include"Enemy.h"
+#include"Menu.h"
 
+#define MAX_NUM_ITEM 4
 #include<sstream>
 #include<string>
 class Game
@@ -12,7 +14,15 @@ class Game
 private:
 	//window
 	sf::RenderWindow* window;
-
+	//menu
+	
+	int selectedItemIndex;
+	sf::Text mainmenu[MAX_NUM_ITEM];
+	//menu bg
+	sf::Texture menuTexture;
+	sf::RectangleShape menuSprite;
+	bool GameStart;
+	
 	//resources
 	std::map<std::string, sf::Texture*> textures;
 	std::vector<Bullet*> bullets;
@@ -52,15 +62,24 @@ private:
 	void initWorld();
 	void initSystems();
 
+	void initBGmenu();
+	
 	void initPlayer();
 	void initEnemies();
 
 public:
 	Game();
 	virtual ~Game();
-	
+	//menu
+	void MoveUp();
+	void MoveDown();
+	int GetPressedItem() { return selectedItemIndex; }
+
+
 	//functions
 	void run();
+
+	void again();
 
 	void updatePollEvents();
 	void updateInput();

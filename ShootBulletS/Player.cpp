@@ -15,10 +15,11 @@ void Player::initVariables()
 void Player::initTexture()
 {
 	//load texture form file
-	if (!this->texture.loadFromFile("Textures/ship.png"))
+	if (!this->texture.loadFromFile("Textures/spaceplane.GIF"))
 	{
 		std::cout << "ERROR::PLAYER::INITTEXTURE::Could not load texture file." << "\n";
 	}
+	
 }
 
 void Player::initSprite()
@@ -28,6 +29,7 @@ void Player::initSprite()
 
 	//resize sprite
 	this->sprite.scale(0.1f, 0.1f);
+	//this->sprite.setPosition(sf::Vector2f(538.f, 417.f));
 }
 
 Player::Player()

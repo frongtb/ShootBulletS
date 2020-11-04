@@ -11,16 +11,17 @@
 
 int main()
 {
-	Menu menu(window.getSize().x,window.getSize().y);
-
-	menu.draw;
+	//sf::RenderWindow window(sf::VideoMode(1080, 720), "ShootBulletS");
+	//Menu menu(window.getSize().x,window.getSize().y);
+	
+	//menu.draw(window);
 
 	srand(static_cast<unsigned>(time(0)));
 
 	Game game;
 
 	game.run();
-
+	
 
 	//end app
 	return 0;
