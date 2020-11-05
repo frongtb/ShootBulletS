@@ -14,10 +14,6 @@ class Game
 private:
 	//window
 	sf::RenderWindow* window;
-	//menu
-	
-	int selectedItemIndex;
-	sf::Text mainmenu[MAX_NUM_ITEM];
 	//menu bg
 	sf::Texture menuTexture;
 	sf::RectangleShape menuSprite;
@@ -70,10 +66,6 @@ private:
 public:
 	Game();
 	virtual ~Game();
-	//menu
-	void MoveUp();
-	void MoveDown();
-	int GetPressedItem() { return selectedItemIndex; }
 
 
 	//functions

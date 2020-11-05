@@ -29,7 +29,7 @@ void Player::initSprite()
 
 	//resize sprite
 	this->sprite.scale(0.1f, 0.1f);
-	//this->sprite.setPosition(sf::Vector2f(538.f, 417.f));
+	this->sprite.setPosition(sf::Vector2f(538.f, 417.f));
 }
 
 Player::Player()

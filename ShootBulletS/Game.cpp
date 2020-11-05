@@ -66,6 +66,19 @@ void Game::initWorld()
 	this->worldBG.setScale(sf::Vector2f(2.5f, 2.8f));
 }
 
+void Game::initBGmenu()
+{
+	if (!this->menuTexture.loadFromFile("Textures/BG1.jpg"))
+	{
+		std::cout << "error menu bg" << "\n";
+	}
+
+	this->menuSprite.setSize(sf::Vector2f(static_cast<float>(this->window->getSize().x),
+		static_cast<float>(this->window->getSize().y)
+	)
+	);
+}
+
 void Game::initSystems()
 {
 	this->points = 0;
@@ -78,7 +91,6 @@ void Game::initPlayer()
 {
 	this->player = new Player();
 
-	
 }
 
 void Game::initEnemies()
@@ -87,17 +99,7 @@ void Game::initEnemies()
 	this->spawnTimer = this->spawnTimerMax;
 }
 
-void Game::initBGmenu()
-{
-	if (!this->menuTexture.loadFromFile("Textures/background1.jpg"))
-	{
-		std::cout << "error menu bg" << "\n";
-	}
 
-	this->menuSprite.setSize(sf::Vector2f(static_cast<float>(this->window->getSize().x), static_cast<float>(this->window->getSize().y)
-	)
-	);
-}
 //con/des
 Game::Game()
 {
@@ -108,9 +110,10 @@ Game::Game()
 	this->initGUI();
 	this->initWorld();
 	this->initSystems();
-
+	
 	this->initPlayer();
 	this->initEnemies();
+	
 }
 
 Game::~Game()
@@ -163,6 +166,7 @@ void Game::again()
 
 	this->player->setHp(100);
 	this->points = 0;
+	this->player->setPosition(sf::Vector2f(538.f, 417.f));
 	for (auto& bullet : this->bullets)
 	{
 		delete bullet;
@@ -412,7 +416,6 @@ void Game::render()
 		{
 			enemy->render(this->window);
 		}
-
 
 		this->renderGUI();
 	}
